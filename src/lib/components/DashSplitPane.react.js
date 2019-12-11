@@ -4,7 +4,7 @@ import stylePropType from 'react-style-proptype';
 import SplitPane from 'react-split-pane';
 
 /**
- * Split-Pane React component, can be nested or split vertically or horizontally!
+ * Split-Pane Dash component, can be nested or split vertically or horizontally!
  *
  * Based on react-split-pane (https://github.com/tomkp/react-split-pane)
  */
