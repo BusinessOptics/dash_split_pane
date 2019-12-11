@@ -1,0 +1,8 @@
+include dash_split_pane/dash_split_pane.min.js
+include dash_split_pane/dash_split_pane.min.js.map
+include dash_split_pane/metadata.json
+include dash_split_pane/package-info.json
+include README.md
+include LICENSE
+include package.json
+include dash_split_pane/dash_split_pane.css
