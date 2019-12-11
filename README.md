@@ -4,6 +4,14 @@ A Dash Split-Pane component, can be nested or split vertically or horizontally!
 
 This is based on React Split Pane: [https://github.com/tomkp/react-split-pane](https://github.com/tomkp/react-split-pane)
 
+## Installation
+
+Install via pip
+
+```
+pip install dash-split-pane
+```
+
 ## Usage
 
 ```python
