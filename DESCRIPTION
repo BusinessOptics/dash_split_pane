@@ -1,6 +1,6 @@
 Package: dashSplitPane
 Title: A split pane for dash based on react split pane.
-Version: 0.0.1
+Version: 1.0.0
 Authors @R: as.person(c(James Saunders <james@businessoptics.boz>))
 Description: A split pane for dash based on react split pane.
 Depends: R (>= 3.0.2)
