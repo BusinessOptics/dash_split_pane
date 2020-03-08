@@ -1,6 +1,6 @@
 {
     "name": "dash_split_pane",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "A split pane for dash based on react split pane.",
     "repository": {
         "type": "git",
