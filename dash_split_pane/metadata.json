@@ -1,1 +1,289 @@
-{"src/lib/components/DashSplitPane.react.js": {"description": "Split-Pane Dash component, can be nested or split vertically or horizontally!\n\nBased on react-split-pane (https://github.com/tomkp/react-split-pane)", "displayName": "DashSplitPane", "methods": [], "props": {"children": {"type": {"name": "node"}, "required": false, "description": "The children of the split pane. There must be exactly 2 children"}, "id": {"type": {"name": "string"}, "required": false, "description": "The ID used to identify this component in Dash callbacks."}, "setProps": {"type": {"name": "func"}, "required": false, "description": "Dash-assigned callback that should be called to report property changes\nto Dash, to make them available for callbacks."}, "allowResize": {"type": {"name": "bool"}, "required": false, "description": "Whether resizing is possible", "defaultValue": {"value": "true", "computed": false}}, "className": {"type": {"name": "string"}, "required": false, "description": "The class name of the primary container"}, "primary": {"type": {"name": "enum", "value": [{"value": "'first'", "computed": false}, {"value": "'second'", "computed": false}]}, "required": false, "description": "By dragging 'draggable' surface you can change size of the first pane.\nThe first pane keeps then its size while the second pane is resized by\nbrowser window. By default it is the left pane for 'vertical' SplitPane\nand the top pane for 'horizontal' SplitPane. If you want to keep size of\nthe second pane and let the first pane to shrink or grow by browser\nwindow dimensions, set SplitPane prop primary to second. In case of\n'horizontal' SplitPane the height of bottom pane remains the same.", "defaultValue": {"value": "'first'", "computed": false}}, "minSize": {"type": {"name": "union", "value": [{"name": "string"}, {"name": "number"}]}, "required": false, "description": "The minimum size you can drag the smallest pane to", "defaultValue": {"value": "50", "computed": false}}, "maxSize": {"type": {"name": "union", "value": [{"name": "string"}, {"name": "number"}]}, "required": false, "description": "You can limit the maximal size of the 'fixed' pane using the maxSize\nparameter with a positive value (measured in pixels but state just a\nnumber). If you wrap the SplitPane into a container component (yes you\ncan, just remember the container has to have the relative or absolute\npositioning), then you'll need to limit the movement of the splitter\n(resizer) at the end of the SplitPane (otherwise it can be dragged\noutside the SplitPane and you don't catch it never more). For this\npurpose use the maxSize parameter with value 0. When dragged the\nsplitter/resizer will stop at the border of the SplitPane component and\nthink this you'll be able to pick it again and drag it back then.\nAnd more: if you set the maxSize to negative value (e.g. -200), then\nthe splitter stops 200px before the border (in other words it sets the\nminimal size of the 'resizable' pane in this case). This can be useful\nalso in the full-screen case of use."}, "size": {"type": {"name": "union", "value": [{"name": "string"}, {"name": "number"}]}, "required": false, "description": "The size of the fixed pane. This prop is updated when the pane resized\nby dragging"}, "split": {"type": {"name": "enum", "value": [{"value": "'vertical'", "computed": false}, {"value": "'horizontal'", "computed": false}]}, "required": false, "description": "Whether to split horizontally or vertically", "defaultValue": {"value": "'vertical'", "computed": false}}, "style": {"type": {"name": "custom", "raw": "stylePropType"}, "required": false, "description": "Styling to be applied to the main container."}, "resizerStyle": {"type": {"name": "custom", "raw": "stylePropType"}, "required": false, "description": "Styling to be applied to the resizer bar"}, "paneStyle": {"type": {"name": "custom", "raw": "stylePropType"}, "required": false, "description": "Styling to be applied to the both panes"}, "pane1Style": {"type": {"name": "custom", "raw": "stylePropType"}, "required": false, "description": "Styling to be applied to the first pane, with precedence over `paneStyle`"}, "pane2Style": {"type": {"name": "custom", "raw": "stylePropType"}, "required": false, "description": "Styling to be applied to the second pane, with precedence over `paneStyle`"}, "paneClassName": {"type": {"name": "string"}, "required": false, "description": "Classname for panes", "defaultValue": {"value": "''", "computed": false}}, "pane1ClassName": {"type": {"name": "string"}, "required": false, "description": "Classname for primary pane", "defaultValue": {"value": "''", "computed": false}}, "pane2ClassName": {"type": {"name": "string"}, "required": false, "description": "Classname for secondary pane", "defaultValue": {"value": "''", "computed": false}}, "resizerClassName": {"type": {"name": "string"}, "required": false, "description": "Classname for resizer"}, "step": {"type": {"name": "number"}, "required": false, "description": "You can use the step prop to only allow resizing in fixed increments."}, "persistence": {"type": {"name": "union", "value": [{"name": "bool"}, {"name": "string"}, {"name": "number"}]}, "required": false, "description": "Used to allow user interactions in this component to be persisted when\nthe component - or the page - is refreshed. If `persisted` is truthy and\nhasn't changed from its previous value, a `value` that the user has\nchanged while using the app will keep that change, as long as\nthe new `value` also matches what was given originally.\nUsed in conjunction with `persistence_type`."}, "persisted_props": {"type": {"name": "arrayOf", "value": {"name": "enum", "value": [{"value": "'size'", "computed": false}]}}, "required": false, "description": "Properties whose user interactions will persist after refreshing the\ncomponent or the page. Since only `size` is allowed this prop can\nnormally be ignored.", "defaultValue": {"value": "['size']", "computed": false}}, "persistence_type": {"type": {"name": "enum", "value": [{"value": "'local'", "computed": false}, {"value": "'session'", "computed": false}, {"value": "'memory'", "computed": false}]}, "required": false, "description": "Where persisted user changes will be stored:\nmemory: only kept in memory, reset on page refresh.\nlocal: window.localStorage, data is kept after the browser quit.\nsession: window.sessionStorage, data is cleared once the browser quit.", "defaultValue": {"value": "'local'", "computed": false}}}}}
+{
+  "src/lib/components/DashSplitPane.react.js": {
+    "description": "Split-Pane Dash component, can be nested or split vertically or horizontally!\n\nBased on react-split-pane (https://github.com/tomkp/react-split-pane)",
+    "displayName": "DashSplitPane",
+    "methods": [],
+    "props": {
+      "children": {
+        "type": {
+          "name": "node"
+        },
+        "required": false,
+        "description": "The children of the split pane. There must be exactly 2 children"
+      },
+      "id": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "The ID used to identify this component in Dash callbacks."
+      },
+      "setProps": {
+        "type": {
+          "name": "func"
+        },
+        "required": false,
+        "description": "Dash-assigned callback that should be called to report property changes\nto Dash, to make them available for callbacks."
+      },
+      "allowResize": {
+        "type": {
+          "name": "bool"
+        },
+        "required": false,
+        "description": "Whether resizing is possible",
+        "defaultValue": {
+          "value": "true",
+          "computed": false
+        }
+      },
+      "className": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "The class name of the primary container"
+      },
+      "primary": {
+        "type": {
+          "name": "enum",
+          "value": [
+            {
+              "value": "'first'",
+              "computed": false
+            },
+            {
+              "value": "'second'",
+              "computed": false
+            }
+          ]
+        },
+        "required": false,
+        "description": "By dragging 'draggable' surface you can change size of the first pane.\nThe first pane keeps then its size while the second pane is resized by\nbrowser window. By default it is the left pane for 'vertical' SplitPane\nand the top pane for 'horizontal' SplitPane. If you want to keep size of\nthe second pane and let the first pane to shrink or grow by browser\nwindow dimensions, set SplitPane prop primary to second. In case of\n'horizontal' SplitPane the height of bottom pane remains the same.",
+        "defaultValue": {
+          "value": "'first'",
+          "computed": false
+        }
+      },
+      "minSize": {
+        "type": {
+          "name": "union",
+          "value": [
+            {
+              "name": "string"
+            },
+            {
+              "name": "number"
+            }
+          ]
+        },
+        "required": false,
+        "description": "The minimum size you can drag the smallest pane to",
+        "defaultValue": {
+          "value": "50",
+          "computed": false
+        }
+      },
+      "maxSize": {
+        "type": {
+          "name": "union",
+          "value": [
+            {
+              "name": "string"
+            },
+            {
+              "name": "number"
+            }
+          ]
+        },
+        "required": false,
+        "description": "You can limit the maximal size of the 'fixed' pane using the maxSize\nparameter with a positive value (measured in pixels but state just a\nnumber). If you wrap the SplitPane into a container component (yes you\ncan, just remember the container has to have the relative or absolute\npositioning), then you'll need to limit the movement of the splitter\n(resizer) at the end of the SplitPane (otherwise it can be dragged\noutside the SplitPane and you don't catch it never more). For this\npurpose use the maxSize parameter with value 0. When dragged the\nsplitter/resizer will stop at the border of the SplitPane component and\nthink this you'll be able to pick it again and drag it back then.\nAnd more: if you set the maxSize to negative value (e.g. -200), then\nthe splitter stops 200px before the border (in other words it sets the\nminimal size of the 'resizable' pane in this case). This can be useful\nalso in the full-screen case of use."
+      },
+      "size": {
+        "type": {
+          "name": "union",
+          "value": [
+            {
+              "name": "string"
+            },
+            {
+              "name": "number"
+            }
+          ]
+        },
+        "required": false,
+        "description": "The size of the fixed pane. This prop is updated when the pane resized\nby dragging"
+      },
+      "split": {
+        "type": {
+          "name": "enum",
+          "value": [
+            {
+              "value": "'vertical'",
+              "computed": false
+            },
+            {
+              "value": "'horizontal'",
+              "computed": false
+            }
+          ]
+        },
+        "required": false,
+        "description": "Whether to split horizontally or vertically",
+        "defaultValue": {
+          "value": "'vertical'",
+          "computed": false
+        }
+      },
+      "style": {
+        "type": {
+          "name": "custom",
+          "raw": "stylePropType"
+        },
+        "required": false,
+        "description": "Styling to be applied to the main container."
+      },
+      "resizerStyle": {
+        "type": {
+          "name": "custom",
+          "raw": "stylePropType"
+        },
+        "required": false,
+        "description": "Styling to be applied to the resizer bar"
+      },
+      "paneStyle": {
+        "type": {
+          "name": "custom",
+          "raw": "stylePropType"
+        },
+        "required": false,
+        "description": "Styling to be applied to the both panes"
+      },
+      "pane1Style": {
+        "type": {
+          "name": "custom",
+          "raw": "stylePropType"
+        },
+        "required": false,
+        "description": "Styling to be applied to the first pane, with precedence over `paneStyle`"
+      },
+      "pane2Style": {
+        "type": {
+          "name": "custom",
+          "raw": "stylePropType"
+        },
+        "required": false,
+        "description": "Styling to be applied to the second pane, with precedence over `paneStyle`"
+      },
+      "paneClassName": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "Classname for panes",
+        "defaultValue": {
+          "value": "''",
+          "computed": false
+        }
+      },
+      "pane1ClassName": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "Classname for primary pane",
+        "defaultValue": {
+          "value": "''",
+          "computed": false
+        }
+      },
+      "pane2ClassName": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "Classname for secondary pane",
+        "defaultValue": {
+          "value": "''",
+          "computed": false
+        }
+      },
+      "resizerClassName": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "Classname for resizer"
+      },
+      "step": {
+        "type": {
+          "name": "number"
+        },
+        "required": false,
+        "description": "You can use the step prop to only allow resizing in fixed increments."
+      },
+      "persistence": {
+        "type": {
+          "name": "union",
+          "value": [
+            {
+              "name": "bool"
+            },
+            {
+              "name": "string"
+            },
+            {
+              "name": "number"
+            }
+          ]
+        },
+        "required": false,
+        "description": "Used to allow user interactions in this component to be persisted when\nthe component - or the page - is refreshed. If `persisted` is truthy and\nhasn't changed from its previous value, a `value` that the user has\nchanged while using the app will keep that change, as long as\nthe new `value` also matches what was given originally.\nUsed in conjunction with `persistence_type`."
+      },
+      "persisted_props": {
+        "type": {
+          "name": "arrayOf",
+          "value": {
+            "name": "enum",
+            "value": [
+              {
+                "value": "'size'",
+                "computed": false
+              }
+            ]
+          }
+        },
+        "required": false,
+        "description": "Properties whose user interactions will persist after refreshing the\ncomponent or the page. Since only `size` is allowed this prop can\nnormally be ignored.",
+        "defaultValue": {
+          "value": "['size']",
+          "computed": false
+        }
+      },
+      "persistence_type": {
+        "type": {
+          "name": "enum",
+          "value": [
+            {
+              "value": "'local'",
+              "computed": false
+            },
+            {
+              "value": "'session'",
+              "computed": false
+            },
+            {
+              "value": "'memory'",
+              "computed": false
+            }
+          ]
+        },
+        "required": false,
+        "description": "Where persisted user changes will be stored:\nmemory: only kept in memory, reset on page refresh.\nlocal: window.localStorage, data is kept after the browser quit.\nsession: window.sessionStorage, data is cleared once the browser quit.",
+        "defaultValue": {
+          "value": "'local'",
+          "computed": false
+        }
+      }
+    }
+  }
+}

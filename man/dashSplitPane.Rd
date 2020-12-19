@@ -10,12 +10,13 @@ Split-Pane Dash component, can be nested or split vertically or horizontally!  B
 }
 
 \usage{
-dashSplitPane(children=NULL, id=NULL, allowResize=NULL, className=NULL, primary=NULL,
-minSize=NULL, maxSize=NULL, size=NULL, split=NULL, style=NULL,
-resizerStyle=NULL, paneStyle=NULL, pane1Style=NULL, pane2Style=NULL,
-paneClassName=NULL, pane1ClassName=NULL, pane2ClassName=NULL,
-resizerClassName=NULL, step=NULL, persistence=NULL, persisted_props=NULL,
-persistence_type=NULL)
+dashSplitPane(children=NULL, id=NULL, allowResize=NULL, className=NULL,
+primary=NULL, minSize=NULL, maxSize=NULL, size=NULL,
+split=NULL, style=NULL, resizerStyle=NULL, paneStyle=NULL,
+pane1Style=NULL, pane2Style=NULL, paneClassName=NULL,
+pane1ClassName=NULL, pane2ClassName=NULL,
+resizerClassName=NULL, step=NULL, persistence=NULL,
+persisted_props=NULL, persistence_type=NULL)
 }
 
 \arguments{
@@ -93,3 +94,6 @@ memory: only kept in memory, reset on page refresh.
 local: window.localStorage, data is kept after the browser quit.
 session: window.sessionStorage, data is cleared once the browser quit.}
 }
+
+\value{named list of JSON elements corresponding to React.js properties and their values}
+
